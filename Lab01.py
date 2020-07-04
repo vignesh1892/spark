@@ -6,11 +6,7 @@ print("Welcome to Python")
 #single line comments
 
 
-print("""
-Multi 
-line 
-comments
-""")
+print("""Multi line comments """)
 
 '''This is also a
      multiline
