@@ -4,11 +4,11 @@ class Promo:
    def __init__(self, custid, amount):
       self.custid = custid
       self.amount = amount
-      Promo.promoval += amount + 10
+      Promo.promoval += amount + 100
    def promoapply(self):
       return promoval
 
-obj1=Promo(1,1000)
+obj1=Promo(1,10000)
 
 from pyspark import SparkConf,SparkContext
 from pyspark.sql import SparkSession
@@ -28,7 +28,7 @@ if __name__ == '__main__':
    hadooprdd = sc.textFile("file:/home/hduser/hive/data/txns",4                                                                             )
    print('total number of lines in hadoop - ' + str(hadooprdd.count()));
    print('print a sample of 20 rows with seed of 100 for dynamic data');
-   for x in rdd.takeSample("true", 10, 110) :
+   for x in rdd.take(10) :
       print(x)
    print("print only the first line of the dataset " );
    print(rdd.first());
