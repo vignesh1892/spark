@@ -20,11 +20,11 @@ def main():
          "convert csv to json in the on prem DF and store the json into new cloud GCS location")
    print("Hive to GCS to hive starts here")
 
-   custstructtype1 = StructType([StructField("custid", StringType(), False),
+   custstructtype1 = StructType([StructField("custid", IntegerType(), False),
                               StructField("firstname", StringType(), False),
                               StructField("lastname", StringType(), True),
                               StructField("city", StringType(), True),
-                              StructField("custage", StringType(), True),
+                              StructField("custage", IntegerType(), True),
                               StructField("custprofession", StringType(), True)])
    #gcs_df = spark.read.csv("gs://com-inceptez-we39-central-vignesh/custs",mode='dropmalformed',schema=custstructtype1)
    gcs_df = spark.read.csv("gs://com-inceptez-we39-central-vignesh/custs",mode='dropmalformed')
