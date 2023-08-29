@@ -25,7 +25,8 @@ def main():
                               StructField("lastname", StringType(), True),
                               StructField("city", StringType(), True),
                               StructField("custage", IntegerType(), True),
-                              StructField("custprofession", StringType(), True)])
+                              StructField("creat_dt", DateType(), True),
+                              StructField("amt", IntegerType(), True)])
    gcs_df = spark.read.csv("gs://com-inceptez-we39-central-vignesh/custs",mode='dropmalformed',schema=custstructtype1)
    #gcs_df = spark.read.csv("gs://com-inceptez-we39-central-vignesh/custs",mode='dropmalformed')
    gcs_df.show(10)
