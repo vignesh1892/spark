@@ -30,7 +30,8 @@ def main():
    gcs_df = spark.read.csv("gs://com-inceptez-we39-central-vignesh/custs",mode='dropmalformed')
    gcs_df.show(10)
    print("GCS Read Completed Successfully")
-   gcs_df.write.mode("overwrite").partitionBy("custage").saveAsTable("default.cust_info_gcs")
+   #gcs_df.write.mode("overwrite").partitionBy("custage").saveAsTable("default.cust_info_gcs")
+   gcs_df.write.mode("overwrite").saveAsTable("default.cust_info_gcs")
    print("GCS to hive table load Completed Successfully")
 
    print("Hive to GCS usecase starts here")
