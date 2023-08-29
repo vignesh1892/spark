@@ -19,12 +19,14 @@ def main():
    print("Use Spark Application to Read csv data from cloud GCS and get a DF created with the GCS data in the on prem, "
          "convert csv to json in the on prem DF and store the json into new cloud GCS location")
    print("Hive to GCS to hive starts here")
-   custstructtype1 = StructType([StructField("id", IntegerType(), False),
-                              StructField("custfname", StringType(), False),
-                              StructField("custlname", StringType(), True),
-                              StructField("custage", ShortType(), True),
-                              StructField("custprofession", StringType(), True)])
-   gcs_df = spark.read.csv("gs://incpetez-data-samples/dataset/custs",mode='dropmalformed',schema=custstructtype1)
+
+   custstructtype1 = StructType([StructField("custid", IntegerType(), False),
+                              StructField("firstname", StringType(), False),
+                              StructField("lastname", StringType(), True),
+                              StructField("city", StringType(), True),
+                              StructField("custage", IntegerType(), True),
+                              StructField("custprofession", IntegerType(), True)])
+   gcs_df = spark.read.csv("gs://com-inceptez-we39-central-vignesh/custs",mode='dropmalformed',schema=custstructtype1)
    gcs_df.show(10)
    print("GCS Read Completed Successfully")
    gcs_df.write.mode("overwrite").partitionBy("custage").saveAsTable("default.cust_info_gcs")
@@ -34,14 +36,14 @@ def main():
    gcs_df=spark.read.table("default.cust_info_gcs")
    curts = spark.createDataFrame([1], IntegerType()).withColumn("curts", current_timestamp()).select(date_format(col("curts"), "yyyyMMddHHmmSS")).first()[0]
    print(curts)
-   gcs_df.repartition(2).write.json("gs://incpetez-data-samples/dataset/cust_output_json_"+curts)
+   gcs_df.repartition(2).write.json("gs://com-inceptez-we39-central-vignesh/cust_output_json_"+curts)
    print("gcs Write Completed Successfully")
 
    print("Hive to GCS usecase starts here")
    gcs_df=spark.read.table("default.cust_info_gcs")
    curts = spark.createDataFrame([1], IntegerType()).withColumn("curts", current_timestamp()).select(date_format(col("curts"), "yyyyMMddHHmmSS")).first()[0]
    print(curts)
-   gcs_df.repartition(2).write.mode("overwrite").csv("gs://incpetez-data-samples/dataset/cust_csv")
+   gcs_df.repartition(2).write.mode("overwrite").csv("gs://com-inceptez-we39-central-vignesh/cust_csv")
    print("gcs Write Completed Successfully")
 
 main()
